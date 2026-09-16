@@ -107,6 +107,13 @@ Copy-Item '.\delphi7-global\delphi7-tasks.bat' `
 - `Delphi: Start Project (without compile)` — запускает существующий `.exe` без компиляции.
 - `Delphi: Start Project (current file, without compile)` — запускает `.exe` проекта активного файла.
 
+### Открытие проекта в Delphi IDE
+
+- `Delphi: Open Project in Delphi IDE` — выбирает проект в workspace и открывает его в Delphi 7 IDE.
+- `Delphi: Open Project in Delphi IDE (current file)` — открывает в Delphi IDE проект, которому принадлежит активный файл.
+
+Для запуска используется `delphi32.exe`. Скрипт ищет его в переменных `DELPHI32`, `DELPHI7_IDE`, `DELPHI7_ROOT`, `DELPHI7_HOME`, `DELPHI7` и в `PATH`. Если переменные не заданы, дополнительно проверяется путь установки Delphi 7 в реестре.
+
 ## Выбор проекта
 
 Скрипт выбирает проект в следующем порядке:

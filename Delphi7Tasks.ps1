@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param (
     [Parameter(Mandatory = $true, Position = 0)]
-    [ValidateSet('compile-file', 'compile-project', 'compile-all', 'build-project', 'build-all', 'clean-project', 'clean-all', 'run-project', 'start-project')]
+    [ValidateSet('compile-file', 'compile-project', 'compile-all', 'build-project', 'build-all', 'clean-project', 'clean-all', 'run-project', 'start-project', 'open-project')]
     [string]$Action,
 
     [Parameter(Position = 1)]
@@ -259,6 +259,77 @@ function Get-Dcc32Path {
     }
 
     throw 'dcc32.exe was not found. Add Delphi 7\Bin to PATH or set DCC32/DELPHI7/DELPHI7_ROOT.'
+}
+
+function Get-Delphi32Path {
+    $values = @()
+    $names = @(
+        'DELPHI32', 'DELPHI32_EXE', 'DELPHI7_IDE', 'DELPHI7_IDE_EXE',
+        'DELPHI7_BIN', 'DELPHI7_ROOT', 'DELPHI7_HOME', 'DELPHI7',
+        'DELPHI_ROOT', 'DELPHI_HOME', 'DELPHI'
+    )
+
+    foreach ($name in $names) {
+        $value = [Environment]::GetEnvironmentVariable($name, 'Process')
+        if (-not [string]::IsNullOrWhiteSpace($value)) {
+            $values += $value
+        }
+    }
+
+    $values += @(
+        Get-ChildItem Env: |
+            Where-Object { $_.Name -match '(?i)(delphi|borland)' } |
+            Select-Object -ExpandProperty Value
+    )
+
+    $candidates = @()
+    foreach ($value in $values) {
+        $part = $value.Trim().Trim([char]34)
+        if ([string]::IsNullOrWhiteSpace($part)) { continue }
+
+        if (Test-Path -LiteralPath $part -PathType Leaf) {
+            $item = Get-Item -LiteralPath $part
+            if ($item.Name -ieq 'delphi32.exe') {
+                $candidates += $item.FullName
+            }
+            else {
+                $candidates += (Join-Path $item.DirectoryName 'delphi32.exe')
+            }
+        }
+        elseif (Test-Path -LiteralPath $part -PathType Container) {
+            $candidates += (Join-Path $part 'delphi32.exe')
+            $candidates += (Join-Path $part 'Bin\delphi32.exe')
+        }
+        elseif ([IO.Path]::GetFileName($part) -ieq 'delphi32.exe') {
+            $candidates += $part
+        }
+    }
+
+    $root = Get-Delphi7Root
+    if (-not [string]::IsNullOrWhiteSpace($root)) {
+        $candidates += (Join-Path $root 'delphi32.exe')
+        $candidates += (Join-Path $root 'Bin\delphi32.exe')
+    }
+
+    $command = Get-Command delphi32.exe -ErrorAction SilentlyContinue
+    if ($null -ne $command) {
+        if ($command.Source) { $candidates += $command.Source }
+        elseif ($command.Path) { $candidates += $command.Path }
+    }
+
+    foreach ($candidate in $candidates) {
+        try {
+            $item = Get-Item -LiteralPath $candidate -ErrorAction Stop
+            if (-not $item.PSIsContainer -and $item.Name -ieq 'delphi32.exe') {
+                return $item.FullName
+            }
+        }
+        catch {
+            # Ignore invalid optional environment values.
+        }
+    }
+
+    throw 'delphi32.exe was not found. Set DELPHI32 or DELPHI7_ROOT, or add the Delphi 7 Bin directory to PATH.'
 }
 
 function Get-RegistryString {
@@ -813,6 +884,11 @@ try {
         $dcc32 = Get-Dcc32Path
     }
 
+    $delphi32 = $null
+    if ($Action -eq 'open-project') {
+        $delphi32 = Get-Delphi32Path
+    }
+
     switch ($Action) {
         'compile-file' {
             $filePath = Resolve-FullPath -Path $ActiveFile -BasePath $root
@@ -912,6 +988,13 @@ try {
         'start-project' {
             $project = Select-DelphiProject -Root $root -File $ActiveFile
             Start-Project -Project $project
+        }
+
+        'open-project' {
+            $project = Select-DelphiProject -Root $root -File $ActiveFile
+            $quotedProject = [char]34 + $project.FullName + [char]34
+            Write-Host ("[Delphi] Opening in Delphi IDE: {0}" -f $project.FullName) -ForegroundColor Green
+            Start-Process -FilePath $delphi32 -ArgumentList $quotedProject
         }
     }
 

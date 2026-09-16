@@ -107,6 +107,13 @@ The following generated files are removed:
 - `Delphi: Start Project (without compile)` — start an existing `.exe` without compiling.
 - `Delphi: Start Project (current file, without compile)` — start the `.exe` belonging to the active file's project.
 
+### Open the project in the Delphi IDE
+
+- `Delphi: Open Project in Delphi IDE` — select a project in the workspace and open it in the Delphi 7 IDE.
+- `Delphi: Open Project in Delphi IDE (current file)` — open the project containing the active file in the Delphi IDE.
+
+The task uses `delphi32.exe`. The script searches `DELPHI32`, `DELPHI7_IDE`, `DELPHI7_ROOT`, `DELPHI7_HOME`, `DELPHI7`, and `PATH`. If these variables are not set, the Delphi 7 installation path is also checked in the registry.
+
 ## Project selection
 
 The script selects a project in this order:

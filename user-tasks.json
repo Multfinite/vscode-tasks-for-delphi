@@ -266,6 +266,57 @@
             "problemMatcher": []
         },
         {
+            "label": "Delphi: Open Project in Delphi IDE",
+            "type": "process",
+            "command": "powershell.exe",
+            "args": [
+                "-NoLogo",
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "open-project",
+                "${workspaceFolder}"
+            ],
+            "options": {
+                "cwd": "${env:USERPROFILE}"
+            },
+            "presentation": {
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Delphi: Open Project in Delphi IDE (current file)",
+            "type": "process",
+            "command": "powershell.exe",
+            "args": [
+                "-NoLogo",
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "open-project",
+                "${workspaceFolder}",
+                "${file}"
+            ],
+            "options": {
+                "cwd": "${env:USERPROFILE}"
+            },
+            "presentation": {
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "Delphi: Run Project",
             "type": "process",
             "command": "powershell.exe",
