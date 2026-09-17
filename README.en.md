@@ -164,7 +164,9 @@ You can explicitly set the compiler path:
 
 ## `.dof` and `.cfg` settings
 
-Delphi 7 stores project settings in `.dof`, while the command-line compiler uses `.cfg`. If the matching `.cfg` file is missing next to the `.dpr`, the script automatically generates it from `.dof`.
+Delphi 7 stores project settings in `.dof`, while the command-line compiler uses `.cfg`. The `.dof` file is treated as the source of truth.
+
+Before every `Compile`, `Build`, or `Run` operation, the script regenerates the matching `.cfg` from `.dof`, even when an older `.cfg` already exists. Manual changes made directly to `.cfg` will therefore be overwritten. If no `.dof` exists, an existing `.cfg` is kept unchanged.
 
 The converter handles the main settings, including:
 

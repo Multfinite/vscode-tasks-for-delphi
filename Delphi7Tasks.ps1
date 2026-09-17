@@ -675,18 +675,33 @@ function Ensure-ProjectCfg {
 
     $baseName = [IO.Path]::GetFileNameWithoutExtension($Project.Name)
     $cfgPath = Join-Path $Project.DirectoryName ($baseName + '.cfg')
+    $dofPath = Join-Path $Project.DirectoryName ($baseName + '.dof')
+
+    # A .dof is the source of truth. Always regenerate the .cfg before a
+    # compile/build/run operation, even when an older .cfg already exists.
+    if (Test-Path -LiteralPath $dofPath -PathType Leaf) {
+        $temporaryCfg = $cfgPath + '.vscode.tmp'
+        try {
+            Convert-DofToCfg -DofPath $dofPath -CfgPath $temporaryCfg
+            Move-Item -LiteralPath $temporaryCfg -Destination $cfgPath -Force
+        }
+        catch {
+            if (Test-Path -LiteralPath $temporaryCfg -PathType Leaf) {
+                Remove-Item -LiteralPath $temporaryCfg -Force -ErrorAction SilentlyContinue
+            }
+            throw
+        }
+
+        Write-Host ("[Delphi] Synchronized compiler config from .dof: {0}" -f $cfgPath) -ForegroundColor Yellow
+        return $cfgPath
+    }
+
+    # Without a .dof, keep an existing manually maintained .cfg.
     if (Test-Path -LiteralPath $cfgPath -PathType Leaf) {
         return $cfgPath
     }
 
-    $dofPath = Join-Path $Project.DirectoryName ($baseName + '.dof')
-    if (-not (Test-Path -LiteralPath $dofPath -PathType Leaf)) {
-        return $null
-    }
-
-    Convert-DofToCfg -DofPath $dofPath -CfgPath $cfgPath
-    Write-Host ("[Delphi] Generated compiler config: {0}" -f $cfgPath) -ForegroundColor Yellow
-    return $cfgPath
+    return $null
 }
 
 function Get-CfgArguments {
