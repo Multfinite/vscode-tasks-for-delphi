@@ -417,6 +417,105 @@
                 "showReuseMessage": false
             },
             "problemMatcher": []
+        },
+        {
+            "label": "Delphi: Open Project in Delphi IDE (temp profile)",
+            "type": "process",
+            "command": "powershell.exe",
+            "args": [
+                "-NoLogo",
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "open-ide-profile",
+                "${workspaceFolder}"
+            ],
+            "options": {
+                "cwd": "${env:USERPROFILE}"
+            },
+            "presentation": {
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Delphi: Open Project in Delphi IDE (temp profile, current file)",
+            "type": "process",
+            "command": "powershell.exe",
+            "args": [
+                "-NoLogo",
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "open-ide-profile",
+                "${workspaceFolder}",
+                "${file}"
+            ],
+            "options": {
+                "cwd": "${env:USERPROFILE}"
+            },
+            "presentation": {
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Delphi: Save IDE global profile",
+            "type": "process",
+            "command": "powershell.exe",
+            "args": [
+                "-NoLogo",
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "save-global-profile"
+            ],
+            "options": {
+                "cwd": "${env:USERPROFILE}"
+            },
+            "presentation": {
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Delphi: Purge IDE temp profiles",
+            "type": "process",
+            "command": "powershell.exe",
+            "args": [
+                "-NoLogo",
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "purge-profiles"
+            ],
+            "options": {
+                "cwd": "${env:USERPROFILE}"
+            },
+            "presentation": {
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false
+            },
+            "problemMatcher": []
         }
     ]
 }
