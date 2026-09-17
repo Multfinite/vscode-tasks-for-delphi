@@ -11,14 +11,11 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "${env:DELPHI_TOOLS}\\Delphi7Tasks.ps1",
                 "compile-file",
                 "${workspaceFolder}",
                 "${file}"
             ],
-            "options": {
-                "cwd": "${env:USERPROFILE}"
-            },
             "presentation": {
                 "reveal": "always",
                 "focus": false,
@@ -38,13 +35,10 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "${env:DELPHI_TOOLS}\\Delphi7Tasks.ps1",
                 "compile-project",
                 "${workspaceFolder}"
             ],
-            "options": {
-                "cwd": "${env:USERPROFILE}"
-            },
             "presentation": {
                 "reveal": "always",
                 "focus": false,
@@ -64,14 +58,11 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "${env:DELPHI_TOOLS}\\Delphi7Tasks.ps1",
                 "compile-project",
                 "${workspaceFolder}",
                 "${file}"
             ],
-            "options": {
-                "cwd": "${env:USERPROFILE}"
-            },
             "presentation": {
                 "reveal": "always",
                 "focus": false,
@@ -91,13 +82,10 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "${env:DELPHI_TOOLS}\\Delphi7Tasks.ps1",
                 "compile-all",
                 "${workspaceFolder}"
             ],
-            "options": {
-                "cwd": "${env:USERPROFILE}"
-            },
             "presentation": {
                 "reveal": "always",
                 "focus": false,
@@ -117,13 +105,10 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "${env:DELPHI_TOOLS}\\Delphi7Tasks.ps1",
                 "build-project",
                 "${workspaceFolder}"
             ],
-            "options": {
-                "cwd": "${env:USERPROFILE}"
-            },
             "presentation": {
                 "reveal": "always",
                 "focus": false,
@@ -146,14 +131,11 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "${env:DELPHI_TOOLS}\\Delphi7Tasks.ps1",
                 "build-project",
                 "${workspaceFolder}",
                 "${file}"
             ],
-            "options": {
-                "cwd": "${env:USERPROFILE}"
-            },
             "presentation": {
                 "reveal": "always",
                 "focus": false,
@@ -173,13 +155,10 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "${env:DELPHI_TOOLS}\\Delphi7Tasks.ps1",
                 "build-all",
                 "${workspaceFolder}"
             ],
-            "options": {
-                "cwd": "${env:USERPROFILE}"
-            },
             "presentation": {
                 "reveal": "always",
                 "focus": false,
@@ -199,13 +178,10 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "${env:DELPHI_TOOLS}\\Delphi7Tasks.ps1",
                 "clean-project",
                 "${workspaceFolder}"
             ],
-            "options": {
-                "cwd": "${env:USERPROFILE}"
-            },
             "presentation": {
                 "reveal": "always",
                 "focus": false,
@@ -224,14 +200,11 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "${env:DELPHI_TOOLS}\\Delphi7Tasks.ps1",
                 "clean-project",
                 "${workspaceFolder}",
                 "${file}"
             ],
-            "options": {
-                "cwd": "${env:USERPROFILE}"
-            },
             "presentation": {
                 "reveal": "always",
                 "focus": false,
@@ -250,13 +223,10 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "${env:DELPHI_TOOLS}\\Delphi7Tasks.ps1",
                 "clean-all",
                 "${workspaceFolder}"
             ],
-            "options": {
-                "cwd": "${env:USERPROFILE}"
-            },
             "presentation": {
                 "reveal": "always",
                 "focus": false,
@@ -275,13 +245,10 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "${env:DELPHI_TOOLS}\\Delphi7Tasks.ps1",
                 "open-project",
                 "${workspaceFolder}"
             ],
-            "options": {
-                "cwd": "${env:USERPROFILE}"
-            },
             "presentation": {
                 "reveal": "always",
                 "focus": false,
@@ -300,14 +267,11 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "${env:DELPHI_TOOLS}\\Delphi7Tasks.ps1",
                 "open-project",
                 "${workspaceFolder}",
                 "${file}"
             ],
-            "options": {
-                "cwd": "${env:USERPROFILE}"
-            },
             "presentation": {
                 "reveal": "always",
                 "focus": false,
@@ -326,13 +290,10 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "${env:DELPHI_TOOLS}\\Delphi7Tasks.ps1",
                 "run-project",
                 "${workspaceFolder}"
             ],
-            "options": {
-                "cwd": "${env:USERPROFILE}"
-            },
             "presentation": {
                 "reveal": "always",
                 "focus": false,
@@ -351,14 +312,11 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "${env:DELPHI_TOOLS}\\Delphi7Tasks.ps1",
                 "run-project",
                 "${workspaceFolder}",
                 "${file}"
             ],
-            "options": {
-                "cwd": "${env:USERPROFILE}"
-            },
             "presentation": {
                 "reveal": "always",
                 "focus": false,
@@ -377,13 +335,10 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "${env:DELPHI_TOOLS}\\Delphi7Tasks.ps1",
                 "start-project",
                 "${workspaceFolder}"
             ],
-            "options": {
-                "cwd": "${env:USERPROFILE}"
-            },
             "presentation": {
                 "reveal": "always",
                 "focus": false,
@@ -402,14 +357,98 @@
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
-                "${env:USERPROFILE}\\.vscode\\delphi7\\Delphi7Tasks.ps1",
+                "${env:DELPHI_TOOLS}\\Delphi7Tasks.ps1",
                 "start-project",
                 "${workspaceFolder}",
                 "${file}"
             ],
-            "options": {
-                "cwd": "${env:USERPROFILE}"
+            "presentation": {
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false
             },
+            "problemMatcher": []
+        },
+        {
+            "label": "Delphi: Open Project in Delphi IDE (temp profile)",
+            "type": "process",
+            "command": "powershell.exe",
+            "args": [
+                "-NoLogo",
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${env:DELPHI_TOOLS}\\Delphi7Tasks.ps1",
+                "open-ide-profile",
+                "${workspaceFolder}"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Delphi: Open Project in Delphi IDE (temp profile, current file)",
+            "type": "process",
+            "command": "powershell.exe",
+            "args": [
+                "-NoLogo",
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${env:DELPHI_TOOLS}\\Delphi7Tasks.ps1",
+                "open-ide-profile",
+                "${workspaceFolder}",
+                "${file}"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Delphi: Save IDE global profile",
+            "type": "process",
+            "command": "powershell.exe",
+            "args": [
+                "-NoLogo",
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${env:DELPHI_TOOLS}\\Delphi7Tasks.ps1",
+                "save-global-profile"
+            ],
+            "presentation": {
+                "reveal": "always",
+                "focus": false,
+                "panel": "dedicated",
+                "showReuseMessage": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Delphi: Purge IDE temp profiles",
+            "type": "process",
+            "command": "powershell.exe",
+            "args": [
+                "-NoLogo",
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${env:DELPHI_TOOLS}\\Delphi7Tasks.ps1",
+                "purge-profiles"
+            ],
             "presentation": {
                 "reveal": "always",
                 "focus": false,

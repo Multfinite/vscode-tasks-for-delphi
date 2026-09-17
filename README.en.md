@@ -114,6 +114,97 @@ The following generated files are removed:
 
 The task uses `delphi32.exe`. The script searches `DELPHI32`, `DELPHI7_IDE`, `DELPHI7_ROOT`, `DELPHI7_HOME`, `DELPHI7`, and `PATH`. If these variables are not set, the Delphi 7 installation path is also checked in the registry.
 
+### Run the IDE in a separate registry profile
+
+- `Delphi: Open Project in Delphi IDE (temp profile)` — the same, but the IDE
+  runs in its own temporary registry profile.
+- `Delphi: Open Project in Delphi IDE (temp profile, current file)` — the same
+  for the active file.
+- `Delphi: Save IDE global profile` — export the global profile to a `.reg` file.
+- `Delphi: Purge IDE temp profiles` — delete orphaned temporary profiles.
+
+The `-r` switch tells the IDE which registry branch to read:
+`delphi32.exe -rD7T-1a2b3c` uses `HKCU\Software\Borland\D7T-1a2b3c\7.0`
+(the `-r` value replaces the product name, the version subkey stays). The
+profile name is a prefix plus a checksum (MD5 by default) of the task start time.
+
+```text
+1. Remove orphaned temporary profiles
+2. Copy HKCU\Software\Borland\Delphi\7.0
+   -> HKCU\Software\Borland\D7T-<checksum>\7.0
+3. Remove the packages passed with -RemovePackages (Known Packages,
+   Disabled Packages, Package Cache)
+4. Strip foreign paths from Library\Search Path (-StripLibraryPatterns)
+5. Build and install the package from -InstallPackage (dcc32 + Known Packages)
+4. Run delphi32.exe -rD7T-<checksum> "<project>.dpr" and wait for exit
+5. Delete the temporary profile
+```
+
+The package is enabled by the separate `profile-enable-package` action:
+in Delphi the checkbox in "Install Packages" means "the path is in
+`Known Packages` and is not in `Disabled Packages`", so the action removes the
+package path from `Disabled Packages` and `Package Cache`. Before starting the
+IDE it is useful to call `profile-package-state`:
+
+```text
+[Delphi] Profile package state:
+[Delphi]   [enabled ] D:\...\MyPackage.bpl (file found)
+```
+
+`[DISABLED]` or `(file not found)` shows the reason right away, together with
+the exact path the IDE will try to load.
+
+`profile-remove-packages` can also drop packages of **other copies of the
+project** (path matches `-StripLibraryPatterns` but is outside `-KeepUnder`);
+otherwise the IDE finds a foreign `<package>.bpl` and unchecks it.
+
+The directory of the built BPL/DCP is added to the profile `Library\Search Path`
+(`profile-enable-package -LibraryPath`).
+
+## Actions for an existing profile
+
+These actions know nothing about any particular project: which packages to
+remove, what to build and in which order is decided by the calling script.
+
+| Action | Description |
+| --- | --- |
+| `new-profile` | create a temporary profile (copy of the global one), prints `PROFILE=<name>` |
+| `delete-profile -ProfileName` | delete a profile |
+| `open-ide-in-profile -ProfileName` | start the IDE in the profile and wait for exit |
+| `profile-remove-packages -ProfileName -Packages [-StripLibraryPatterns] [-KeepUnder] [-PackageMatchMode]` | remove packages from `Known Packages` / `Disabled Packages` / `Package Cache` |
+| `profile-strip-library -ProfileName -StripLibraryPatterns [-KeepUnder]` | strip foreign paths from `Library\Search Path` |
+| `profile-install-package -ProfileName -InstallPackage [-StripLibraryPatterns] [-Rebuild] [-LocalCopyDir]` | build the `.dpk` with `dcc32`, add it to `Known Packages`, prints `PACKAGE=<bpl path>` |
+| `profile-enable-package -ProfileName -BplPath -EnableMatchNames [-LibraryPath]` | enable the package: drop it from `Disabled Packages` / `Package Cache`, optionally add its folder to the library path |
+| `profile-package-state -ProfileName -RemovePackages` | print the package state (`enabled` / `DISABLED`, whether the file exists) |
+| `profile-add-library-path -ProfileName -LibraryPaths` | add folders to `Library\Search Path` |
+
+`new-profile` and `profile-install-package` print machine-readable lines
+`PROFILE=<name>` and `PACKAGE=<path>` that the calling script parses from stdout.
+
+If the IDE cannot load a package from a UNC/network path, call
+`profile-install-package` with `-LocalCopyDir <folder>`: BPL/DCP are copied
+there and the local path is registered.
+### File encoding: UTF-8 **with BOM**
+
+The script contains Cyrillic comments, and Windows PowerShell 5.1 reads a
+BOM-less `.ps1` as ANSI, which breaks the parser. The repository file is
+already UTF-8 with BOM — copy the file itself, not the text from a browser.
+
+```powershell
+$p = Join-Path $env:USERPROFILE '\.vscode\delphi7\Delphi7Tasks.ps1'
+$text = [IO.File]::ReadAllText($p, [Text.Encoding]::UTF8)
+[IO.File]::WriteAllText($p, $text, (New-Object Text.UTF8Encoding $true))
+```
+
+Profile settings live in the `$script:Profile` block at the top of
+`Delphi7Tasks.ps1`. If your IDE lays out the `-r` key differently, change the
+template:
+
+```powershell
+ProfileKeyTemplate = '{Vendor}\{Profile}\{Version}'   # default
+# ProfileKeyTemplate = '{Vendor}\Delphi\{Profile}'    # alternative
+```
+
 ## Project selection
 
 The script selects a project in this order:
@@ -195,7 +286,7 @@ That path is merged into the unit, include, resource, and object search options.
 The tasks start `powershell.exe` from the local user directory instead of `${workspaceFolder}`. This is intentional for workspaces on UNC paths, for example:
 
 ```text
-\\tsclient\Z\Repositories\FlowPlantM\Flow Plant\src
+\\server\share\Repositories\MyProject\src
 ```
 
 `cmd.exe` cannot use a UNC path as its current directory, so the workspace path is passed to the PowerShell script as an argument.
